@@ -1,0 +1,38 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+    Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  line-height: 1.6;
+  font-size: 18px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: #0070f3;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* 
+In Next.js, you can add global CSS files by importing them from pages/_app.js. 
+You cannot import global CSS anywhere else.
+
+The reason that global CSS can't be imported outside of pages/_app.js ??
+Cause global CSS affects all elements on the page. 
+
+So... Where can you import global CSS files?
+Ans. Only inside pages/_app.js
+*/
