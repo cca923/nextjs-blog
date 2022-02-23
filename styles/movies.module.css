@@ -1,0 +1,18 @@
+.list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+  padding: 1rem;
+  grid-auto-rows: 330px;
+}
+
+.listImg {
+  height: 250px;
+  object-fit: cover;
+  width: fill-available;
+}
+
+.listText {
+  margin: 0px auto;
+  text-align: center;
+}
