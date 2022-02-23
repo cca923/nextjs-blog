@@ -9,7 +9,7 @@
 .listImg {
   height: 250px;
   object-fit: cover;
-  width: fill-available;
+  width: -webkit-fill-available;
 }
 
 .listText {
