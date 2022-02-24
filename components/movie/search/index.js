@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import Form from "./form";
-import Result from "./result";
+import Form from "./Form";
+import Result from "../../../containers/Result";
 
 export default function Search() {
   const [url, setUrl] = useState();

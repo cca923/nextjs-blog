@@ -1,12 +1,14 @@
 import Head from "next/head";
 import Link from "next/link";
 
-import Date from "../components/date";
-import Layout, { siteTitle } from "../components/layout";
+import Date from "../components/Date";
+import Layout, { siteTitle } from "../components/Layout";
 
 import { getSortedPostsData } from "../lib/posts";
 
 import utilStyles from "../styles/utils.module.css";
+
+const cities = ["Taipei", "Taichung", "Kaohsiung", "Hualien"];
 
 export async function getStaticProps() {
   const allPostsData = getSortedPostsData();
@@ -34,14 +36,20 @@ export default function Home({ allPostsData }) {
       </section>
 
       <section className={utilStyles.headingMd}>
-        <h2 className={utilStyles.headingLg}>Taipei's Weather (SSR)</h2>
-        <Link href="/weather">
-          <a>Click me to see weather!</a>
-        </Link>
+        <h2 className={utilStyles.headingLg}>City's Weather (SSR)</h2>
+        <ul className={utilStyles.list}>
+          {cities.map((city) => (
+            <li className={utilStyles.listItem} key={city}>
+              <Link href={`/weather/${city}`}>
+                <a>{city}</a>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section className={utilStyles.headingMd}>
-        <h2 className={utilStyles.headingLg}>Movies (SSR, CSR)</h2>
+        <h2 className={utilStyles.headingLg}>Movies (SG, CSR)</h2>
         <Link href="/movies">
           <a>Click me to search movies!</a>
         </Link>

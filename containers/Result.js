@@ -1,6 +1,8 @@
 import { useState, useEffect, memo } from "react";
 
-import movieStyles from "../../../styles/movies.module.css";
+import Card from "../components/Movie/Card";
+
+import movieStyles from "../styles/movies.module.css";
 
 function Result({ url }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -46,16 +48,7 @@ function Result({ url }) {
               {Array.isArray(movieData) ? (
                 <section className={movieStyles.list}>
                   {movieData.map((data) => {
-                    return (
-                      <div key={data.imdbID}>
-                        <img
-                          src={data.Poster}
-                          alt="movie poster"
-                          className={movieStyles.listImg}
-                        />
-                        <p className={movieStyles.listText}>{data.Title}</p>
-                      </div>
-                    );
+                    return <Card data={data} key={data.imdbID} />;
                   })}
                 </section>
               ) : (

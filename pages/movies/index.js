@@ -1,6 +1,6 @@
-import Layout from "../../components/layout";
-import Favorite from "../../components/movie/favorite";
-import Search from "../../components/movie/search";
+import Layout from "../../components/Layout";
+import Favorite from "../../components/Movie/Favorite";
+import Search from "../../components/Movie/Search";
 
 import utilStyles from "../../styles/utils.module.css";
 
