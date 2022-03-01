@@ -49,9 +49,16 @@ export default function Home({ allPostsData }) {
       </section>
 
       <section className={utilStyles.headingMd}>
-        <h2 className={utilStyles.headingLg}>Movies (SG, CSR)</h2>
+        <h2 className={utilStyles.headingLg}>Movies (SSG, CSR)</h2>
         <Link href="/movies">
           <a>Click me to search movies!</a>
+        </Link>
+      </section>
+
+      <section className={utilStyles.headingMd}>
+        <h2 className={utilStyles.headingLg}>styled-component Practice</h2>
+        <Link href="/styled-component">
+          <a>Click me to see the playground!</a>
         </Link>
       </section>
 

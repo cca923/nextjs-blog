@@ -1,12 +1,18 @@
+import styled from "styled-components";
+
 import Layout from "../../components/Layout";
 
 import utilStyles from "../../styles/utils.module.css";
 
-export async function getServerSideProps(props) {
-  console.log("props", props);
+const Temperature = styled.li`
+  color: ${(props) => props.theme.colors.primary};
+`;
+
+export async function getServerSideProps(ctx) {
+  // console.log("ctx", ctx);
 
   const cityGeoRes = await fetch(
-    `http://api.openweathermap.org/geo/1.0/direct?q=${props.query.city}&limit=1&appid=410cfc593b0152c0793f36334885d376`,
+    `http://api.openweathermap.org/geo/1.0/direct?q=${ctx.query.city}&limit=1&appid=410cfc593b0152c0793f36334885d376`,
     {
       method: "GET",
     }
@@ -49,10 +55,11 @@ export default function Weather({ cityWeatherData }) {
         </h1>
         <ol>
           <li>Weather Description｜{cityWeatherData.weather[0].description}</li>
-          <li>
+
+          <Temperature>
             Temperature｜
             {toCelsius(cityWeatherData.main.temp).toFixed(1)} °C
-          </li>
+          </Temperature>
         </ol>
       </article>
     </Layout>
