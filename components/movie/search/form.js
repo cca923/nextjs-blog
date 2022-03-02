@@ -1,6 +1,13 @@
-import { useState, memo } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
-function Form({ setUrl }) {
+import {
+  fetchMovieCancelled,
+  fetchMovieRequest,
+} from "../../../redux/movie-result";
+
+function Form() {
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
 
   function handleMovieName(e) {
@@ -11,10 +18,17 @@ function Form({ setUrl }) {
     e.preventDefault();
 
     if (name.length !== 0) {
-      setUrl(`https://www.omdbapi.com/?s=${name}&apikey=8efdf7b9`);
+      dispatch(
+        fetchMovieRequest(`https://www.omdbapi.com/?s=${name}&apikey=8efdf7b9`)
+      );
     } else {
       window.alert("Please enter movie name!");
     }
+  }
+
+  function handleCancelSearch() {
+    setName("");
+    dispatch(fetchMovieCancelled());
   }
 
   return (
@@ -24,8 +38,11 @@ function Form({ setUrl }) {
         <input type="text" value={name} onChange={(e) => handleMovieName(e)} />
       </label>
       <button type="submit">Search</button>
+      <button type="button" onClick={handleCancelSearch}>
+        Cancel
+      </button>
     </form>
   );
 }
 
-export default memo(Form);
+export default Form;

@@ -1,13 +1,14 @@
 import { ofType } from "redux-observable";
 import { of, from } from "rxjs";
 
-import { switchMap, catchError, map } from "rxjs/operators";
+import { switchMap, map, takeUntil, catchError } from "rxjs/operators";
 import { ajax } from "rxjs/ajax";
 
 // types
 const FETCH_MOVIE_REQUEST = "FETCH_MOVIE_REQUEST";
 const FETCH_MOVIE_SUCCESS = "FETCH_MOVIE_SUCCESS";
 const FETCH_MOVIE_FAILURE = "FETCH_MOVIE_FAILURE";
+const FETCH_MOVIE_CANCELLED = "FETCH_MOVIE_CANCELLED";
 
 // actions
 export const fetchMovieRequest = (payload) => ({
@@ -25,44 +26,47 @@ const fetchMovieFailure = (payload) => ({
   payload,
 });
 
+export const fetchMovieCancelled = () => ({
+  type: FETCH_MOVIE_CANCELLED,
+});
+
 // epics
 export const fetchMovieEpic = (action$) =>
   action$.pipe(
     ofType(FETCH_MOVIE_REQUEST),
     switchMap((action) =>
-      // ajax({
-      //   url: action.payload,
-      //   method: "GET",
-      //   headers: {
-      //     origin: "http://localhost:3000",
-      //     "Content-Type": "application/json",
-      //     "Access-Control-Allow-Origin": "*",
-      //   },
-      // })
-
-      // ajax
-      //   .getJSON(action.payload)
-
+      // ajax.getJSON(action.payload) // CORS issue
       from(
         fetch(action.payload, {
           method: "GET",
-        }).then(async (res) => await res.json())
-      ).pipe(
-        map((response) => {
-          if (response.Response === "True") {
-            return fetchMovieSuccess(response?.Search);
-          } else {
-            return fetchMovieSuccess(response?.Error);
-          }
-        }),
-        catchError((err) => of(fetchMovieFailure(err.message)))
+        })
       )
+        .pipe(switchMap((res) => res.json()))
+        .pipe(
+          map((response) => {
+            return fetchMovieSuccess(
+              response?.Response === "True" ? response?.Search : response?.Error
+            );
+
+            // let payload = response?.Search;
+
+            // if (response?.Response !== "True") {
+            //   payload = response.Error;
+            // }
+
+            // return fetchMovieSuccess(payload);
+          }),
+          takeUntil(action$.pipe(ofType(FETCH_MOVIE_CANCELLED))),
+          catchError((err) => of(fetchMovieFailure(err.message)))
+        )
     ),
     catchError((err) => of(fetchMovieFailure(err.message)))
   );
 
 // reducers
-export const moviesReducer = (state = [], action) => {
+const defaultState = [];
+
+export const moviesReducer = (state = defaultState, action) => {
   switch (action.type) {
     case FETCH_MOVIE_REQUEST:
       return "Loading...";
@@ -72,6 +76,9 @@ export const moviesReducer = (state = [], action) => {
 
     case FETCH_MOVIE_FAILURE:
       return action.payload;
+
+    case FETCH_MOVIE_CANCELLED:
+      return defaultState;
 
     default:
       return state;
