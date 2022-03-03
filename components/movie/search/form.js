@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import {
   fetchMovieCancelled,
   fetchMovieRequest,
-} from "../../../redux/movie-result";
+} from "../../../redux/toolkit/slice";
 
 function Form() {
   const dispatch = useDispatch();

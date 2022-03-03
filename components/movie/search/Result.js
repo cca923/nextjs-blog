@@ -1,7 +1,6 @@
-import { useState, useEffect, memo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { fetchMovieRequest, moviesSelector } from "../../../redux/movie-result";
+import { moviesSelector } from "../../../redux/toolkit/selector";
 
 import Card from "../Card";
 
@@ -9,23 +8,37 @@ import movieStyles from "../../../styles/movies.module.css";
 
 function Result() {
   const movieData = useSelector(moviesSelector);
+  const { isLoading, sources, error } = movieData;
+  console.log(movieData);
 
   return (
     <>
-      {movieData.length !== 0 ? (
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
         <>
-          {Array.isArray(movieData) ? (
-            <section className={movieStyles.list}>
-              {movieData.map((data) => {
-                return <Card data={data} key={data.imdbID} />;
-              })}
-            </section>
+          {sources.length !== 0 ? (
+            <>
+              {error ? (
+                <div>{error}</div>
+              ) : (
+                <>
+                  {Array.isArray(movieData.sources) ? (
+                    <section className={movieStyles.list}>
+                      {movieData.sources.map((data) => {
+                        return <Card data={data} key={data.imdbID} />;
+                      })}
+                    </section>
+                  ) : (
+                    <div>{movieData.sources}</div>
+                  )}
+                </>
+              )}
+            </>
           ) : (
-            <div>{movieData}</div>
+            <div>Enter something...</div>
           )}
         </>
-      ) : (
-        <div>Enter something...</div>
       )}
     </>
   );

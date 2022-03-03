@@ -1,9 +1,9 @@
 import { ofType } from "redux-observable";
 import { of, from } from "rxjs";
-
 import { switchMap, map, takeUntil, catchError } from "rxjs/operators";
 import { ajax } from "rxjs/ajax";
 
+// ----- No reduxjs/toolkit ----- //
 // types
 const FETCH_MOVIE_REQUEST = "FETCH_MOVIE_REQUEST";
 const FETCH_MOVIE_SUCCESS = "FETCH_MOVIE_SUCCESS";
@@ -47,14 +47,6 @@ export const fetchMovieEpic = (action$) =>
             return fetchMovieSuccess(
               response?.Response === "True" ? response?.Search : response?.Error
             );
-
-            // let payload = response?.Search;
-
-            // if (response?.Response !== "True") {
-            //   payload = response.Error;
-            // }
-
-            // return fetchMovieSuccess(payload);
           }),
           takeUntil(action$.pipe(ofType(FETCH_MOVIE_CANCELLED))),
           catchError((err) => of(fetchMovieFailure(err.message)))

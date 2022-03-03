@@ -1,9 +1,10 @@
 // import "../styles/global.css";
 
 import { Provider } from "react-redux";
-
 import { createGlobalStyle, ThemeProvider } from "styled-components";
-import configureStore from "../redux/store";
+
+// import configureStore from "../redux/store"; // No reduxjs/toolkit
+import store from "../redux/store"; // reduxjs/toolkit
 
 const GlobalStyle = createGlobalStyle`
 html,
@@ -45,9 +46,11 @@ export default function App({ Component, pageProps }) {
     <>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Provider store={configureStore()}>
+        {/* <Provider store={configureStore()}> */}
+        <Provider store={store}>
           <Component {...pageProps} />
         </Provider>
+        {/* </Provider> */}
       </ThemeProvider>
     </>
   );

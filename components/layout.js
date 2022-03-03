@@ -1,14 +1,23 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
 
 import styles from "./layout.module.css";
 import utilStyles from "../styles/utils.module.css";
+
+import { fetchMovieCancelled } from "../redux/toolkit/slice";
 
 const name = "Anna Chou";
 export const siteTitle = "Next.js Sample Website";
 
 export default function Layout({ children, home }) {
+  const dispatch = useDispatch();
+
+  function handleCancel() {
+    dispatch(fetchMovieCancelled());
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -68,7 +77,7 @@ export default function Layout({ children, home }) {
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">
-            <a>← Back to home</a>
+            <a onClick={handleCancel}>← Back to home</a>
           </Link>
         </div>
       )}
