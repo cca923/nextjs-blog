@@ -17,3 +17,9 @@ export const fetchMovies = (name) =>
     url: `https://www.omdbapi.com/?s=${name}&apikey=8efdf7b9`,
     method: "GET",
   });
+
+export const fetchPassenger = (page, size) =>
+  apiRequest({
+    url: `https://api.instantwebtools.net/v1/passenger?page=${page}&size=${size}`,
+    method: "GET",
+  });

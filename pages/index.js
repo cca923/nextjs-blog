@@ -56,9 +56,9 @@ export default function Home({ allPostsData }) {
       </section>
 
       <section className={utilStyles.headingMd}>
-        <h2 className={utilStyles.headingLg}>styled-component Practice</h2>
-        <Link href="/styled-component">
-          <a>Click me to see the playground!</a>
+        <h2 className={utilStyles.headingLg}>Query with Dynamic Route</h2>
+        <Link href="/passengers">
+          <a>Click me to check passenger data</a>
         </Link>
       </section>
 

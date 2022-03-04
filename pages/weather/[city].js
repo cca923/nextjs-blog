@@ -28,11 +28,7 @@ export async function getServerSideProps(ctx) {
   const cityWeatherRes = await fetchCityWeather(cityLatitude, cityLongitude);
   const cityWeatherData = await cityWeatherRes.json();
 
-  return {
-    props: {
-      cityWeatherData,
-    },
-  };
+  return { props: { cityWeatherData } };
 }
 
 export default function Weather({ cityWeatherData }) {
