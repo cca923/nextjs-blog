@@ -1,3 +1,5 @@
+import { fetchMovies } from "../../apis/service";
+
 import Layout from "../../components/Layout";
 import Favorite from "../../components/Movie/Favorite";
 import Search from "../../components/Movie/Search";
@@ -5,13 +7,9 @@ import Search from "../../components/Movie/Search";
 import utilStyles from "../../styles/utils.module.css";
 
 export async function getStaticProps() {
-  const res = await fetch(
-    "http://www.omdbapi.com/?s=Harry+Potter&apikey=8efdf7b9",
-    {
-      method: "GET",
-    }
-  );
-  const harryPotterData = await res.json();
+  const harryPotterRes = await fetchMovies("Harry+Potter");
+  const harryPotterData = await harryPotterRes.json();
+
   return { props: { harryPotterData } };
 }
 

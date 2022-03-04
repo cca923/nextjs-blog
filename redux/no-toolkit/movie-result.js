@@ -3,7 +3,7 @@ import { of, from } from "rxjs";
 import { switchMap, map, takeUntil, catchError } from "rxjs/operators";
 import { ajax } from "rxjs/ajax";
 
-// ----- No reduxjs/toolkit ----- //
+// ----- No reduxjs/toolkit (沒更新 fetch 方式)----- //
 // types
 const FETCH_MOVIE_REQUEST = "FETCH_MOVIE_REQUEST";
 const FETCH_MOVIE_SUCCESS = "FETCH_MOVIE_SUCCESS";

@@ -10,17 +10,15 @@ import {
   fetchMovieCancelled,
 } from "./slice";
 
+import { fetchMovies } from "../../apis/service";
+
 // epics
 export const fetchMovieEpic = (action$) =>
   action$.pipe(
     ofType(fetchMovieRequest.type),
     switchMap((action) =>
       // ajax.getJSON(action.payload) // CORS issue
-      from(
-        fetch(action.payload, {
-          method: "GET",
-        })
-      )
+      from(fetchMovies(action.payload))
         .pipe(switchMap((res) => res.json()))
         .pipe(
           map((response) => {

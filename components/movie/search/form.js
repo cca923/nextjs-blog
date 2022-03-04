@@ -18,9 +18,7 @@ function Form() {
     e.preventDefault();
 
     if (name.length !== 0) {
-      dispatch(
-        fetchMovieRequest(`https://www.omdbapi.com/?s=${name}&apikey=8efdf7b9`)
-      );
+      dispatch(fetchMovieRequest(name));
     } else {
       window.alert("Please enter movie name!");
     }
