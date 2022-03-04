@@ -1,3 +1,4 @@
+import { memo } from "react";
 import styled from "styled-components";
 
 const Passenger = styled.div`
@@ -25,7 +26,7 @@ const Detail = styled.li`
   color: #343a40;
 `;
 
-export default function Card({ passengers }) {
+function Card({ passengers }) {
   return (
     <>
       {passengers.map((data) => {
@@ -49,3 +50,5 @@ export default function Card({ passengers }) {
     </>
   );
 }
+
+export default memo(Card);
