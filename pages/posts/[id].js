@@ -17,7 +17,7 @@ export async function getStaticProps({ params }) {
   return { props: { postData } };
 }
 
-export default function Post({ postData }) {
+export default function PostPage({ postData }) {
   return (
     <Layout>
       <Head>

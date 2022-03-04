@@ -1,18 +1,21 @@
 import { fetchPassenger } from "../../apis/service";
+
 import Layout from "../../components/Layout";
 
-export async function getStaticProps() {
-  const passengerRes = await fetchPassenger(0, 10);
-  const passengerData = await passengerRes.json();
-  console.log(passengerData);
+import Passengers from "../../container/Passengers";
 
-  return { props: { passengerData } };
+export async function getStaticProps() {
+  let currentIndex = { page: 0, size: 10 };
+  const passengerRes = await fetchPassenger(currentIndex);
+  const passengerData = await passengerRes.json();
+
+  return { props: { passengerData, currentIndex } };
 }
 
-export default function Passengers({ passengerData }) {
+export default function PassengersPage({ passengerData, currentIndex }) {
   return (
     <Layout>
-      <div></div>
+      <Passengers passengerData={passengerData} currentIndex={currentIndex} />
     </Layout>
   );
 }

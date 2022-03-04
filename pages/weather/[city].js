@@ -13,7 +13,7 @@ const Temperature = styled.li`
 export async function getServerSideProps(ctx) {
   // console.log("ctx", ctx);
 
-  const cityGeoRes = await fetchCityGeography(ctx.query.city);
+  const cityGeoRes = await fetchCityGeography({ city: ctx.query.city });
   const cityGeoData = await cityGeoRes.json();
 
   if (!cityGeoData[0]) {
@@ -25,13 +25,16 @@ export async function getServerSideProps(ctx) {
   const cityLatitude = cityGeoData[0]?.lat;
   const cityLongitude = cityGeoData[0]?.lon;
 
-  const cityWeatherRes = await fetchCityWeather(cityLatitude, cityLongitude);
+  const cityWeatherRes = await fetchCityWeather({
+    latitude: cityLatitude,
+    longitude: cityLongitude,
+  });
   const cityWeatherData = await cityWeatherRes.json();
 
   return { props: { cityWeatherData } };
 }
 
-export default function Weather({ cityWeatherData }) {
+export default function WeatherPage({ cityWeatherData }) {
   function toCelsius(kelvin) {
     return kelvin - 273.15;
   }

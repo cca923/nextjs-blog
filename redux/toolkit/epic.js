@@ -18,7 +18,7 @@ export const fetchMovieEpic = (action$) =>
     ofType(fetchMovieRequest.type),
     switchMap((action) =>
       // ajax.getJSON(action.payload) // CORS issue
-      from(fetchMovies(action.payload))
+      from(fetchMovies({ name: action.payload }))
         .pipe(switchMap((res) => res.json()))
         .pipe(
           map((response) => {

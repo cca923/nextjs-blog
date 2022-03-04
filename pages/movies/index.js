@@ -7,13 +7,13 @@ import Search from "../../components/Movie/Search";
 import utilStyles from "../../styles/utils.module.css";
 
 export async function getStaticProps() {
-  const harryPotterRes = await fetchMovies("Harry+Potter");
+  const harryPotterRes = await fetchMovies({ name: "Harry+Potter" });
   const harryPotterData = await harryPotterRes.json();
 
   return { props: { harryPotterData } };
 }
 
-export default function Movies({ harryPotterData }) {
+export default function MoviesPage({ harryPotterData }) {
   return (
     <Layout>
       <h2 className={utilStyles.headingXl}>My Favorite Movie</h2>
