@@ -1,23 +1,24 @@
-import Head from "next/head";
-import Link from "next/link";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import Head from 'next/head'
+import Link from 'next/link'
 
-import Date from "../components/Date";
-import Layout, { siteTitle } from "../components/Layout";
+import Date from '../components/Date'
+import Layout, { siteTitle } from '../components/Layout'
 
-import { getSortedPostsData } from "../lib/posts";
+import { getSortedPostsData } from '../lib/posts'
 
-import utilStyles from "../styles/utils.module.css";
+import utilStyles from '../styles/utils.module.css'
 
-const cities = ["Taipei", "Taichung", "Kaohsiung", "Hualien"];
+const cities = ['Taipei', 'Taichung', 'Kaohsiung', 'Hualien']
 
 export async function getStaticProps() {
-  const allPostsData = getSortedPostsData();
+  const allPostsData = getSortedPostsData()
 
   return {
     props: {
       allPostsData,
     },
-  };
+  }
 }
 
 export default function Home({ allPostsData }) {
@@ -30,13 +31,14 @@ export default function Home({ allPostsData }) {
       <section className={utilStyles.headingMd}>
         <p>Nice to meet you!</p>
         <p>
-          (This is a sample website - I built this blog site on{" "}
-          <a href="https://nextjs.org/learn">this Next.js tutorial</a>.)
+          (This is a sample website - I built this blog site on
+          <a href="https://nextjs.org/learn">this Next.js tutorial</a>
+          .)
         </p>
       </section>
 
       <section className={utilStyles.headingMd}>
-        <h2 className={utilStyles.headingLg}>City's Weather (SSR)</h2>
+        <h2 className={utilStyles.headingLg}>City Weather (SSR)</h2>
         <ul className={utilStyles.list}>
           {cities.map((city) => (
             <li className={utilStyles.listItem} key={city}>
@@ -79,5 +81,5 @@ export default function Home({ allPostsData }) {
         </ul>
       </section>
     </Layout>
-  );
+  )
 }

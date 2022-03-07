@@ -1,10 +1,10 @@
 // import "../styles/global.css";
 
-import { Provider } from "react-redux";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { Provider } from 'react-redux'
+import { createGlobalStyle, ThemeProvider } from 'styled-components'
 
 // import configureStore from "../redux/store"; // No reduxjs/toolkit
-import store from "../redux/store"; // reduxjs/toolkit
+import store, { initStore } from '../redux/store' // reduxjs/toolkit
 
 const GlobalStyle = createGlobalStyle`
 html,
@@ -33,13 +33,13 @@ a:hover {
 img {
   display: block;
 }
-`;
+`
 
 const theme = {
   colors: {
-    primary: "#0a9396",
+    primary: '#0a9396',
   },
-};
+}
 
 export default function App({ Component, pageProps }) {
   return (
@@ -47,13 +47,13 @@ export default function App({ Component, pageProps }) {
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         {/* <Provider store={configureStore()}> */}
-        <Provider store={store}>
+        <Provider store={initStore()}>
           <Component {...pageProps} />
         </Provider>
         {/* </Provider> */}
       </ThemeProvider>
     </>
-  );
+  )
 }
 
 // This App component is the top-level component which will be common across all the different pages.

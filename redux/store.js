@@ -1,10 +1,9 @@
-import { createStore, applyMiddleware } from "redux"; // No reduxjs/toolkit
-import { configureStore } from "@reduxjs/toolkit";
+// import { createStore, applyMiddleware } from 'redux' // No reduxjs/toolkit
+import { configureStore } from '@reduxjs/toolkit'
+import { createWrapper } from 'next-redux-wrapper'
+import { createEpicMiddleware } from 'redux-observable'
 
-import { createEpicMiddleware } from "redux-observable";
-import { rootEpic, rootReducer } from "./root";
-
-const epicMiddleware = createEpicMiddleware();
+import { rootEpic, rootReducer } from './root'
 
 // ----- No reduxjs/toolkit ----- //
 // export default function configureStore() {
@@ -16,11 +15,18 @@ const epicMiddleware = createEpicMiddleware();
 // }
 
 // ----- reduxjs/toolkit ----- //
-const store = configureStore({
-  reducer: rootReducer,
-  middleware: [epicMiddleware],
-});
 
-epicMiddleware.run(rootEpic);
+export const initStore = () => {
+  const epicMiddleware = createEpicMiddleware()
 
-export default store;
+  const store = configureStore({
+    reducer: rootReducer,
+    middleware: [epicMiddleware],
+  })
+
+  epicMiddleware.run(rootEpic)
+
+  return store
+}
+
+// export const wrapper = createWrapper(initStore, { debug: true })

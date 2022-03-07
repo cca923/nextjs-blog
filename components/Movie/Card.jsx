@@ -1,4 +1,4 @@
-import movieStyles from "../../styles/movies.module.css";
+import movieStyles from '../../styles/movies.module.css'
 
 export default function Card({ data }) {
   return (
@@ -10,5 +10,5 @@ export default function Card({ data }) {
       />
       <p className={movieStyles.listText}>{data.Title}</p>
     </div>
-  );
+  )
 }

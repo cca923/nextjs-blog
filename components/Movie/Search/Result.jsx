@@ -1,20 +1,21 @@
-import { useSelector } from "react-redux";
+/* eslint-disable react/jsx-no-useless-fragment */
+import { useSelector } from 'react-redux'
 
-import { moviesSelector } from "../../../redux/toolkit/selector";
+import { moviesSelector } from '../../../redux/toolkit/Movies/selector'
 
-import Card from "../Card";
+import Card from '../Card'
 
-import movieStyles from "../../../styles/movies.module.css";
+import movieStyles from '../../../styles/movies.module.css'
 
 function Result() {
-  const movieData = useSelector(moviesSelector);
-  const { isLoading, sources, error } = movieData;
-  console.log(movieData);
+  const movieData = useSelector(moviesSelector)
+  const { isLoading, sources, error } = movieData
+  console.log(movieData)
 
   return (
     <>
       {isLoading ? (
-        <div>Loading...</div>
+        <div> Loading...</div>
       ) : (
         <>
           {sources.length !== 0 ? (
@@ -25,9 +26,7 @@ function Result() {
                 <>
                   {Array.isArray(movieData.sources) ? (
                     <section className={movieStyles.list}>
-                      {movieData.sources.map((data) => {
-                        return <Card data={data} key={data.imdbID} />;
-                      })}
+                      {movieData.sources.map((data) => <Card data={data} key={data.imdbID} />)}
                     </section>
                   ) : (
                     <div>{movieData.sources}</div>
@@ -41,7 +40,7 @@ function Result() {
         </>
       )}
     </>
-  );
+  )
 }
 
-export default Result;
+export default Result
