@@ -3,7 +3,6 @@ import { of, from } from 'rxjs'
 import {
   switchMap, map, takeUntil, catchError,
 } from 'rxjs/operators'
-// import { ajax } from 'rxjs/ajax'
 
 import {
   fetchPassengersRequest,
@@ -15,13 +14,18 @@ import {
 import { fetchPassenger } from '../../../apis/service'
 
 // epics
-export const fetchMovieEpic = (action$) => action$.pipe(
+export const fetchPassengersEpic = (action$) => action$.pipe(
   ofType(fetchPassengersRequest.type),
   switchMap((action) => from(fetchPassenger({ page: action.payload.page, size: action.payload.size }))
-    // ajax.getJSON(action.payload) // CORS issue
     .pipe(switchMap((res) => res.json()))
     .pipe(
-      map((response) => fetchPassengersSuccess(response.data)),
+      map((response) => {
+        const { data, totalPages } = response
+        const { page, size } = action.payload
+        return fetchPassengersSuccess({
+          data, totalPages, page, size,
+        })
+      }),
       takeUntil(action$.pipe(ofType(fetchPassengersCancelled.type))),
       catchError((err) => of(fetchPassengersFailure(err.message))),
     )),

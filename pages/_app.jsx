@@ -1,10 +1,11 @@
 // import "../styles/global.css";
+// import { Provider } from 'react-redux'
 
 import { Provider } from 'react-redux'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 
 // import configureStore from "../redux/store"; // No reduxjs/toolkit
-import store, { initStore } from '../redux/store' // reduxjs/toolkit
+import { initStore, wrapper } from '../redux/store'
 
 const GlobalStyle = createGlobalStyle`
 html,
@@ -41,20 +42,28 @@ const theme = {
   },
 }
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   return (
     <>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        {/* <Provider store={configureStore()}> */}
-        <Provider store={initStore()}>
-          <Component {...pageProps} />
-        </Provider>
-        {/* </Provider> */}
+        <Component {...pageProps} />
       </ThemeProvider>
     </>
   )
 }
+
+App.getInitialProps = wrapper.getInitialAppProps((store) => async ({ Component, ctx }) => {
+  const pageProps = {
+    ...(Component.getInitialProps ? await Component.getInitialProps({ ...ctx, store }) : {}),
+  }
+
+  return {
+    pageProps: { pageProps },
+  }
+})
+
+export default wrapper.withRedux(App)
 
 // This App component is the top-level component which will be common across all the different pages.
 // You can use this App component to keep state when navigating between pages.

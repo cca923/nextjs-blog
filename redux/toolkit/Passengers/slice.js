@@ -2,7 +2,10 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   isLoading: false,
-  sources: [],
+  page: 0,
+  size: 0,
+  totalPages: 0,
+  data: [],
   error: null,
 }
 
@@ -10,14 +13,20 @@ export const passengersSlice = createSlice({
   name: 'passengers',
   initialState,
   reducers: {
-    fetchPassengersRequest: (state, action) => {
+    fetchPassengersRequest: (state) => {
       state.isLoading = true
-      state.sources = action.payload
       state.error = null
     },
     fetchPassengersSuccess: (state, action) => {
+      const {
+        page, size, totalPages, data,
+      } = action.payload
+
       state.isLoading = false
-      state.sources = [...state.sources, ...action.payload]
+      state.page = page
+      state.size = size
+      state.totalPages = totalPages
+      state.data = [...state.data, ...data]
     },
     fetchPassengersFailure: (state, action) => {
       state.isLoading = false

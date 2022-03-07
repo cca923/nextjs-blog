@@ -1,11 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Waypoint } from 'react-waypoint'
 import styled from 'styled-components'
 
-import { fetchPassenger } from '../../apis/service'
-
 import Loading from '../../components/Loading'
 import PassengerCard from '../../components/Passengers/PassengerCard'
+import { passengersSelector } from '../../redux/toolkit/Passengers/selector'
+import { fetchPassengersRequest } from '../../redux/toolkit/Passengers/slice'
 
 const PassengersWrap = styled.div`
   display: grid;
@@ -14,42 +15,49 @@ const PassengersWrap = styled.div`
   padding: 1rem;
 `
 
-export default function Passengers({ passengerData, currentIndex }) {
-  const { data, totalPages } = passengerData
-  // const { currentPage } = currentIndex
+export default function Passengers() {
+  const initialIndex = { page: 0, size: 10 }
+  const [index, setIndex] = useState(initialIndex)
+  const dispatch = useDispatch()
 
-  const [passengers, setPassengers] = useState(data)
-  const [isLoading, setIsLoading] = useState(false)
+  useEffect(() => {
+    dispatch(fetchPassengersRequest(index))
+  }, [index.page])
 
-  async function loadMore() {
-    setIsLoading(true)
+  const passengerData = useSelector(passengersSelector)
 
-    const passengerRes = await fetchPassenger({
-      currentPage: ++currentIndex.currentPage,
-      size: 10,
-    })
-    const passengerData = await passengerRes.json()
-    setPassengers((prePassenger) => [...prePassenger, ...passengerData.data])
+  const {
+    isLoading, page, totalPages, data, error,
+  } = passengerData
 
-    setIsLoading(false)
+  console.log(error)
+
+  function loadMore() {
+    if (totalPages > 1 && page !== totalPages) {
+      setIndex({ ...index, page: page + 1 })
+    }
   }
 
   return (
+
     <>
       <PassengersWrap>
         {/* 把 Card 裡面 Passenger 的部分拿出來寫，比較乾淨，還可以重複利用，用外面決定 Card 尺寸 */}
-        {passengers.map((data) => (
+        {data.map((data) => (
           // eslint-disable-next-line no-underscore-dangle
           <PassengerCard data={data} key={data._id} />
         ))}
 
-        {!isLoading && (
-          <Waypoint
-            onEnter={
-              totalPages > 1 && currentIndex.currentPage !== totalPages && loadMore
-            }
-          />
-        )}
+        {error ? <div>{error}</div>
+          : (
+            // eslint-disable-next-line react/jsx-no-useless-fragment
+            <>
+              {!isLoading && (
+              <Waypoint onEnter={() => loadMore()} />
+              )}
+            </>
+          )}
+
       </PassengersWrap>
 
       {isLoading && <Loading />}

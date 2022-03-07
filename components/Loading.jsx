@@ -6,5 +6,7 @@ const LoadingWrap = styled.div`
 `
 
 export default function Loading() {
-  return <LoadingWrap>Loading...</LoadingWrap>
+  return (
+    <LoadingWrap>Loading...</LoadingWrap>
+  )
 }
