@@ -6,10 +6,11 @@ import { wrapper } from '../../redux/store'
 import { fetchPassengersRequest } from '../../redux/toolkit/Passengers/slice'
 
 // ----- getStaticProps fetch (With next-redux-wrapper) ----- //
-// export const getStaticProps = wrapper.getStaticProps((store) => async ({ req, res }) => {
-//   const currentIndex = { page: 0, size: 10 }
-//   store.dispatch(fetchPassengersRequest(currentIndex))
-// })
+export const getStaticProps = wrapper.getStaticProps((store) => async ({ req, res }) => {
+  const { passengers } = store.getState()
+  const { page, size } = passengers
+  store.dispatch(fetchPassengersRequest({ page, size }))
+})
 
 export default function PassengersPage() {
   return (

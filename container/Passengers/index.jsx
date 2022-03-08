@@ -25,9 +25,9 @@ export default function Passengers() {
     isLoading, page, size, data, error,
   } = passengers
 
-  useEffect(() => {
-    dispatch(fetchPassengersRequest({ page, size }))
-  }, [])
+  // useEffect(() => {
+  //   dispatch(fetchPassengersRequest({ page, size }))
+  // }, [])
 
   function loadMore() {
     if (hasMore) {

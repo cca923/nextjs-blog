@@ -1,4 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAction, createSlice } from '@reduxjs/toolkit'
+import { HYDRATE } from 'next-redux-wrapper'
+
+const hydrate = createAction(HYDRATE)
 
 const initialState = {
   isLoading: false,
@@ -33,6 +36,12 @@ export const passengersSlice = createSlice({
       state.error = action.payload
     },
     fetchPassengersCancelled: () => initialState,
+  },
+  extraReducers: (builder) => {
+    builder.addCase(hydrate, (state, action) => ({
+      ...state,
+      ...action.payload.passengers,
+    }))
   },
 })
 
