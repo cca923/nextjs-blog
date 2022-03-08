@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Waypoint } from 'react-waypoint'
 import styled from 'styled-components'
@@ -24,10 +24,6 @@ export default function Passengers() {
   const {
     isLoading, page, size, data, error,
   } = passengerData
-
-  console.log(passengerData)
-
-  // const [index, setIndex] = useState({ page, size })
 
   useEffect(() => {
     dispatch(fetchPassengersRequest({ page, size }))
