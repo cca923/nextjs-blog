@@ -13,7 +13,6 @@ import {
 
 import { fetchPassenger } from '../../../apis/service'
 
-// epics
 export const fetchPassengersEpic = (action$) => action$.pipe(
   ofType(fetchPassengersRequest.type),
   switchMap((action) => from(fetchPassenger({ page: action.payload.page, size: action.payload.size }))

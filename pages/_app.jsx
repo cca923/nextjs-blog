@@ -1,11 +1,9 @@
 // import "../styles/global.css";
-// import { Provider } from 'react-redux'
-
-import { Provider } from 'react-redux'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 
 // import configureStore from "../redux/store"; // No reduxjs/toolkit
-import { initStore, wrapper } from '../redux/store'
+// import { Provider } from 'react-redux' // No wrapper
+import { wrapper } from '../redux/store'
 
 const GlobalStyle = createGlobalStyle`
 html,
