@@ -38,7 +38,7 @@ export default function Home({ allPostsData }) {
       </section>
 
       <section className={utilStyles.headingMd}>
-        <h2 className={utilStyles.headingLg}>City Weather (SSR)</h2>
+        <h2 className={utilStyles.headingLg}>City Weather (SSR, dynamic route)</h2>
         <ul className={utilStyles.list}>
           {cities.map((city) => (
             <li className={utilStyles.listItem} key={city}>
@@ -65,7 +65,7 @@ export default function Home({ allPostsData }) {
       </section>
 
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>Blog</h2>
+        <h2 className={utilStyles.headingLg}>Blog (SSG, dynamic route)</h2>
         <ul className={utilStyles.list}>
           {allPostsData.map(({ id, date, title }) => (
             <li className={utilStyles.listItem} key={id}>
