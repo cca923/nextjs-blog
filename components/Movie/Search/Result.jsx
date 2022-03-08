@@ -8,9 +8,8 @@ import Card from '../Card'
 import movieStyles from '../../../styles/movies.module.css'
 
 function Result() {
-  const movieData = useSelector(moviesSelector)
-  const { isLoading, sources, error } = movieData
-  console.log(movieData)
+  const movies = useSelector(moviesSelector)
+  const { isLoading, sources, error } = movies
 
   return (
     <>
@@ -24,12 +23,12 @@ function Result() {
                 <div>{error}</div>
               ) : (
                 <>
-                  {Array.isArray(movieData.sources) ? (
+                  {Array.isArray(sources) ? (
                     <section className={movieStyles.list}>
-                      {movieData.sources.map((data) => <Card data={data} key={data.imdbID} />)}
+                      {sources.map((data) => <Card data={data} key={data.imdbID} />)}
                     </section>
                   ) : (
-                    <div>{movieData.sources}</div>
+                    <div>{sources}</div>
                   )}
                 </>
               )}

@@ -4,8 +4,8 @@ export const passengersSelector = (state) => state.passengers
 
 export const passengersHasMoreSelector = createSelector(
   [passengersSelector],
-  (passengersData) => {
-    const { page, totalPages } = passengersData
+  (passengers) => {
+    const { page, totalPages } = passengers
     return totalPages > 1 && page + 1 !== totalPages
   },
 )

@@ -18,12 +18,12 @@ const PassengersWrap = styled.div`
 
 export default function Passengers() {
   const dispatch = useDispatch()
-  const passengerData = useSelector(passengersSelector)
+  const passengers = useSelector(passengersSelector)
   const hasMore = useSelector(passengersHasMoreSelector)
 
   const {
     isLoading, page, size, data, error,
-  } = passengerData
+  } = passengers
 
   useEffect(() => {
     dispatch(fetchPassengersRequest({ page, size }))
