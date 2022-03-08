@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Waypoint } from 'react-waypoint'
 import styled from 'styled-components'
@@ -24,10 +23,6 @@ export default function Passengers() {
   const {
     isLoading, page, size, data, error,
   } = passengers
-
-  // useEffect(() => {
-  //   dispatch(fetchPassengersRequest({ page, size }))
-  // }, [])
 
   function loadMore() {
     if (hasMore) {
