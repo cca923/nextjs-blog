@@ -64,13 +64,6 @@ export default function Home({ allPostsData }) {
         </Link>
       </section>
 
-      <section className={utilStyles.headingMd}>
-        <h2 className={utilStyles.headingLg}>Socket.IO Practice</h2>
-        <Link href="/socket-chat">
-          <a>Click me for socket-chat-example</a>
-        </Link>
-      </section>
-
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
         <ul className={utilStyles.list}>

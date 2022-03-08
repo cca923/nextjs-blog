@@ -18,21 +18,18 @@ const PassengersWrap = styled.div`
 
 export default function Passengers() {
   const dispatch = useDispatch()
-  const initialIndex = { page: 0, size: 10 }
-  const [index, setIndex] = useState(initialIndex)
-
-  useEffect(() => {
-    dispatch(fetchPassengersRequest(index))
-  }, [index.page])
-
   const passengerData = useSelector(passengersSelector)
   const {
-    isLoading, page, totalPages, data, error,
+    isLoading, page, size, hasMore, data, error,
   } = passengerData
 
+  useEffect(() => {
+    dispatch(fetchPassengersRequest({ page, size }))
+  }, [])
+
   function loadMore() {
-    if (totalPages > 1 && page !== totalPages) {
-      setIndex({ ...index, page: page + 1 })
+    if (hasMore) {
+      dispatch(fetchPassengersRequest({ page: page + 1, size }))
     }
   }
 
@@ -51,7 +48,8 @@ export default function Passengers() {
             // eslint-disable-next-line react/jsx-no-useless-fragment
             <>
               {!isLoading && (
-              <Waypoint onEnter={() => loadMore()} />
+              // eslint-disable-next-line react/jsx-no-bind
+              <Waypoint onEnter={loadMore} />
               )}
             </>
           )}
