@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import Loading from '../../components/Loading'
 import PassengerCard from '../../components/Passengers/PassengerCard'
 
-import { passengersSelector } from '../../redux/toolkit/Passengers/selector'
+import { passengersSelector, passengersHasMoreSelector } from '../../redux/toolkit/Passengers/selector'
 import { fetchPassengersRequest } from '../../redux/toolkit/Passengers/slice'
 
 const PassengersWrap = styled.div`
@@ -19,9 +19,15 @@ const PassengersWrap = styled.div`
 export default function Passengers() {
   const dispatch = useDispatch()
   const passengerData = useSelector(passengersSelector)
+  const hasMore = useSelector(passengersHasMoreSelector)
+
   const {
-    isLoading, page, size, hasMore, data, error,
+    isLoading, page, size, data, error,
   } = passengerData
+
+  console.log(passengerData)
+
+  // const [index, setIndex] = useState({ page, size })
 
   useEffect(() => {
     dispatch(fetchPassengersRequest({ page, size }))

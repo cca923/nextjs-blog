@@ -5,7 +5,6 @@ const initialState = {
   page: 0,
   size: 10,
   totalPages: 0,
-  hasMore: false,
   data: [],
   error: null,
 }
@@ -26,13 +25,7 @@ export const passengersSlice = createSlice({
       state.isLoading = false
       state.page = page
       state.size = size
-
-      if (totalPages > 1 && page + 1 !== totalPages) {
-        state.hasMore = true
-      } else {
-        state.hasMore = false
-      }
-
+      state.totalPages = totalPages
       state.data = [...state.data, ...data]
     },
     fetchPassengersFailure: (state, action) => {
