@@ -1,15 +1,24 @@
+import { StateObservable } from 'redux-observable'
+import { lastValueFrom, of, Subject } from 'rxjs'
+
 import Layout from '../../components/Layout'
 
 import Passengers from '../../container/Passengers'
 
+import { rootEpic } from '../../redux/root'
 import { wrapper } from '../../redux/store'
 import { fetchPassengersRequest } from '../../redux/toolkit/Passengers/slice'
 
 // ----- getStaticProps fetch (With next-redux-wrapper) ----- //
-// export const getStaticProps = wrapper.getStaticProps((store) => async ({ req, res }) => {
-//   const currentIndex = { page: 0, size: 10 }
-//   store.dispatch(fetchPassengersRequest(currentIndex))
-// })
+export const getStaticProps = wrapper.getStaticProps((store) => async ({ req, res }) => {
+  const { passengers } = store.getState()
+  const { page, size } = passengers
+
+  const state$ = new StateObservable(new Subject(), store.getState())
+  // eslint-disable-next-line max-len
+  const fetchPassengersRequestAction = await lastValueFrom(rootEpic(of(fetchPassengersRequest({ page, size })), state$, {}))
+  store.dispatch(fetchPassengersRequestAction)
+})
 
 export default function PassengersPage() {
   return (
