@@ -1,11 +1,14 @@
-import { combineEpics } from "redux-observable";
-import { combineReducers } from "redux";
+import { combineEpics } from 'redux-observable'
+import { combineReducers } from 'redux'
 
 // import { fetchMovieEpic, moviesReducer } from "./no-toolkit/movie-result"; // No reduxjs/toolkit
-import { fetchMovieEpic } from "./toolkit/epic"; // reduxjs/toolkit
-import moviesSlice from "./toolkit/slice"; // reduxjs/toolkit
+import { fetchMovieEpic } from './toolkit/Movies/epic' // reduxjs/toolkit
+import moviesSlice from './toolkit/Movies/slice' // reduxjs/toolkit
 
-export const rootEpic = combineEpics(fetchMovieEpic);
+import { fetchPassengersEpic } from './toolkit/Passengers/epic'
+import passengersSlice from './toolkit/Passengers/slice'
+
+export const rootEpic = combineEpics(fetchMovieEpic, fetchPassengersEpic)
 
 // ----- No reduxjs/toolkit ----- //
 // export const rootReducer = combineReducers({
@@ -15,4 +18,5 @@ export const rootEpic = combineEpics(fetchMovieEpic);
 // ----- reduxjs/toolkit ----- //
 export const rootReducer = combineReducers({
   movies: moviesSlice,
-});
+  passengers: passengersSlice,
+})

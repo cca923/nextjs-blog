@@ -1,5 +1,1 @@
-export const apiRequest = ({ url, method }) => {
-  return fetch(url, {
-    method: method,
-  });
-};
+export const apiRequest = ({ url, method }) => fetch(url, { method })

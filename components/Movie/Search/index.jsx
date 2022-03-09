@@ -1,5 +1,5 @@
-import Form from "./Form";
-import Result from "./Result";
+import Form from './Form'
+import Result from './Result'
 
 export default function Search() {
   return (
@@ -7,5 +7,5 @@ export default function Search() {
       <Form />
       <Result />
     </>
-  );
+  )
 }

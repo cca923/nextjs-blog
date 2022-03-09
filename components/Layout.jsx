@@ -1,21 +1,22 @@
-import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
-import { useDispatch } from "react-redux";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import Head from 'next/head'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useDispatch } from 'react-redux'
 
-import styles from "./layout.module.css";
-import utilStyles from "../styles/utils.module.css";
+import { fetchMovieCancelled } from '../redux/toolkit/Movies/slice'
 
-import { fetchMovieCancelled } from "../redux/toolkit/slice";
+import styles from './layout.module.css'
+import utilStyles from '../styles/utils.module.css'
 
-const name = "Anna Chou";
-export const siteTitle = "Next.js Sample Website";
+const name = 'Anna Chou'
+export const siteTitle = 'Next.js Sample Website'
 
 export default function Layout({ children, home }) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   function handleCancel() {
-    dispatch(fetchMovieCancelled());
+    dispatch(fetchMovieCancelled())
   }
 
   return (
@@ -29,7 +30,8 @@ export default function Layout({ children, home }) {
         <meta
           property="og:image"
           content={`https://og-image.vercel.app/${encodeURI(
-            siteTitle
+            siteTitle,
+          // eslint-disable-next-line max-len
           )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
         />
         <meta name="og:title" content={siteTitle} />
@@ -82,5 +84,5 @@ export default function Layout({ children, home }) {
         </div>
       )}
     </div>
-  );
+  )
 }
