@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import SocketIOClient from 'socket.io-client'
+import io from 'socket.io-client'
 
 const ChatWrap = styled.div`
  width: 100%;
@@ -10,19 +10,32 @@ const ChatWrap = styled.div`
 `
 
 const Message = styled.div`
- background-color: #fff;
+ background-color: ${(props) => (props.dataUser === props.user ? '#fff' : '#a8dadc')} ;
  padding: 0.5rem 1rem;
  margin: 1rem;
 `
+
+export const createWebSocketConnection = ({ url, path }) => {
+  const socket = io(url, {
+    path,
+    transports: ['websocket'],
+  })
+  return socket
+}
 
 export default function Chat({ setConnected, user }) {
   const [chat, setChat] = useState([])
 
   useEffect(() => {
     // connect to socket server
-    const socket = SocketIOClient.connect('http://localhost:3000', {
+    const socket = io.connect('http://localhost:3000', {
       path: '/api/socketio',
     })
+
+    // const socketConnection = createWebSocketConnection({
+    //   url: 'https://chat-web.test.langlive.tech/chat_nsp',
+    //   path: '/chat_nsp',
+    // })
 
     // log socket connection
     socket.on('connect', () => {
@@ -42,7 +55,7 @@ export default function Chat({ setConnected, user }) {
   return (
     <ChatWrap>
       {chat.map((data, index) => (
-        <Message key={index}>
+        <Message key={index} dataUser={data.user} user={user}>
           {data.user === user ? 'Me' : data.user}
           ：
           {data.message}
