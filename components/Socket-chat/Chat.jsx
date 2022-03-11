@@ -1,7 +1,12 @@
 /* eslint-disable max-len */
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import styled from 'styled-components'
 import io from 'socket.io-client'
+import { getAllChatMessage } from '../../redux/toolkit/Socket-chat/slice'
+import { useDispatch, useSelector } from 'react-redux'
+import { socketChatSelector } from '../../redux/toolkit/Socket-chat/selector'
+import { getUserInfo } from '../../redux/toolkit/User/slice'
+import { userInfoSelector } from '../../redux/toolkit/User/selector'
 
 const ChatWrap = styled.div`
  width: 100%;
@@ -30,13 +35,15 @@ export const socketConnection = createWebSocketConnection({
   path: '/chat_nsp',
 })
 
-export default function Chat({
-  setConnected, user, chat, setChat,
-}) {
+export default function Chat({ setConnected }) {
+  const dispatch = useDispatch()
+  const socketChat = useSelector(socketChatSelector)
+  const userInfo = useSelector(userInfoSelector)
+
   useEffect(() => {
     // --- socketParams ---
     // accessToken: 'febe4a18b276c58cbd62eb523410b05e',
-    // liveId: '1000513Y25498FPVx',
+    // liveId: 'Live_id(會根據不同 room 變)',
     // liveKey: 'JNEwk1',
     // nickname: '😔😉',
     // pfid: 1000282,
@@ -45,14 +52,14 @@ export default function Chat({
     // referral: '',
 
     // --- this.getAuth(socketParams) ---
-    //     access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsaXZlX2lkIjoiMTAwMDUxM1kyNTQ5OEZQVngiLCJwZmlkIjoiMTAwMDI4MiIsIm5hbWUiOiLwn5iU8J-YiSIsImFjY2Vzc190b2tlbiI6ImZlYmU0YTE4YjI3NmM1OGNiZDYyZWI1MjM0MTBiMDVlIiwibHYiOjEsImZyb20iOjEsImZyb21fc2VxIjoxLCJjbGllbnRfdHlwZSI6IkxBTkdfV0VCIn0.UF8oBS6oB-O-zctwFWsfgEG-_8f3Cna6_8q8RJF1blA"
-    // anchor_pfid: 1000513
-    // client_type: "LANG_WEB"
-    // from: "LANG_WEB"
-    // live_id: "1000513Y25498FPVx"
-    // r: 0
-    // referral: ""
-    // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsaXZlX2lkIjoiMTAwMDUxM1kyNTQ5OEZQVngiLCJwZmlkIjoiMTAwMDI4MiIsIm5hbWUiOiLwn5iU8J-YiSIsImFjY2Vzc190b2tlbiI6ImZlYmU0YTE4YjI3NmM1OGNiZDYyZWI1MjM0MTBiMDVlIiwibHYiOjEsImZyb20iOjEsImZyb21fc2VxIjoxLCJjbGllbnRfdHlwZSI6IkxBTkdfV0VCIn0.UF8oBS6oB-O-zctwFWsfgEG-_8f3Cna6_8q8RJF1blA"
+    // access_token: "",
+    // anchor_pfid: 1000513,
+    // client_type: "LANG_WEB",
+    // from: "LANG_WEB",
+    // live_id: "Live_id(會根據不同 room 變)",
+    // r: 0,
+    // referral: "",
+    // token: "",
 
     const userToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsaXZlX2lkIjoiMTAwMDEwOVkxNjc1MWgxcWsiLCJwZmlkIjoiMTAwMDU5MSIsIm5hbWUiOiJKYWNrMTExIiwiYWNjZXNzX3Rva2VuIjoiYmQ4OGQ3MWU0YWVmMmRiOTM3MzllNTFhMjU5MjNiODkiLCJsdiI6MSwiZnJvbSI6MSwiZnJvbV9zZXEiOjEsImNsaWVudF90eXBlIjoiTEFOR19XRUIifQ.vhW77Om6NbbWMZn_XBXG6CrC8UwJpXV43_SHUvmkhKk'
 
@@ -69,38 +76,38 @@ export default function Chat({
 
     socketConnection.once('connect', () => {
       socketConnection?.emit('authentication', authData)
+
+      const user = `User_${String(new Date().getTime()).slice(-3)}`
+      dispatch(getUserInfo(user))
+
       setConnected(true)
     })
 
     socketConnection.on('reconnect', () => {
       socketConnection?.emit('authentication', { ...authData, isReconnect: true })
+
+      setConnected(true)
     })
 
-    // log socket connection
-    // socketConnection.on('connect', () => {
-    //   console.log('SOCKET CONNECTED!', socketConnection.id)
-    //   setConnected(true)
-    // })
-
-    // update chat on new message dispatched
-
     // socket disconnet onUnmount if exists
-    // if (socketConnection) return () => socketConnection.disconnect()
+    if (socketConnection) return () => socketConnection.disconnect()
   }, [])
 
   useEffect(() => {
     socketConnection.on('msg', (message) => {
-      console.log(message.name)
-
-      setChat((preMessage) => [...preMessage, message])
+      dispatch(getAllChatMessage(message))
     })
   }, [])
 
   return (
     <ChatWrap>
-      {chat.map((data, index) => (
-        <Message key={index} dataUser={data.name} user={user}>
-          {data.name === user ? 'Me' : data.name}
+      {socketChat.data.map((data, index) => (
+        <Message
+          key={index}
+          dataUser={data.name}
+          user={userInfo.name}
+        >
+          {data.name === userInfo.name ? 'Me' : data.name}
           ：
           {data.msg}
         </Message>

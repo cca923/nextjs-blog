@@ -1,5 +1,8 @@
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
+import { sendChatMessage } from '../../redux/toolkit/Socket-chat/slice'
+import { userInfoSelector } from '../../redux/toolkit/User/selector'
 import { socketConnection } from './Chat'
 
 const InputWrap = styled.form`
@@ -22,8 +25,10 @@ const MessageSendButton = styled.button`
  margin-left: 0.5rem;
 `
 
-export default function Input({ connected, user, setChat }) {
+export default function Input({ connected }) {
   const [message, setMessage] = useState('')
+  const dispatch = useDispatch()
+  const userInfo = useSelector(userInfoSelector)
 
   function handleMessage(e) {
     setMessage(e.target.value)
@@ -33,28 +38,10 @@ export default function Input({ connected, user, setChat }) {
     e.preventDefault()
 
     if (message.length !== 0) {
-      const newChat = {
-        live_id: '1000109Y16751h1qk', // Room_id
-        msg: message,
-        name: user,
-        at: new Date().getTime(),
-        grade_id: '4',
-        grade_lvl: '33',
-        is_admin: false,
-        nlv: 0,
-        pfid: '1000591',
-        rel_color: '#FFFFFF',
-        signed: 1,
-        type: 0,
-        ugid: 11,
-        uglv: 55,
-        vip_fan: 0,
-        vip_fan_nameplate: { content: '粉絲團', color: 0 },
-      }
-
-      socketConnection.emit('msg', newChat)
+      socketConnection.emit('msg', { ...userInfo, msg: message })
       setMessage('')
-      setChat((preMessage) => [...preMessage, newChat])
+
+      dispatch(sendChatMessage({ msg: message }))
     }
   }
 
