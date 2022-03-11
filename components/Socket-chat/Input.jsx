@@ -26,9 +26,9 @@ const MessageSendButton = styled.button`
 `
 
 export default function Input({ connected }) {
-  const [message, setMessage] = useState('')
   const dispatch = useDispatch()
   const userInfo = useSelector(userInfoSelector)
+  const [message, setMessage] = useState('')
 
   function handleMessage(e) {
     setMessage(e.target.value)

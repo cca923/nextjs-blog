@@ -14,8 +14,6 @@ export const socketChatSlice = createSlice({
     },
     sendChatMessage: () => {},
     appendChatMessage: (state, action) => {
-      console.log(action.payload)
-
       state.data = [...state.data, action.payload]
     },
   },

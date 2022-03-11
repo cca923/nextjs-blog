@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { useEffect } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import io from 'socket.io-client'
 import { getAllChatMessage } from '../../redux/toolkit/Socket-chat/slice'
@@ -39,6 +39,7 @@ export default function Chat({ setConnected }) {
   const dispatch = useDispatch()
   const socketChat = useSelector(socketChatSelector)
   const userInfo = useSelector(userInfoSelector)
+  const chatRef = useRef()
 
   useEffect(() => {
     // --- socketParams ---
@@ -99,8 +100,15 @@ export default function Chat({ setConnected }) {
     })
   }, [])
 
+  const scrollToBottom = useCallback(() => {
+    const chatEl = chatRef?.current
+    chatEl.scrollTop = chatEl.scrollHeight
+  }, [chatRef])
+
+  useEffect(scrollToBottom, [socketChat])
+
   return (
-    <ChatWrap>
+    <ChatWrap ref={chatRef}>
       {socketChat.data.map((data, index) => (
         <Message
           key={index}
