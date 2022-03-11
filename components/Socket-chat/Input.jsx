@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import styled from 'styled-components'
+import { socketConnection } from './Chat'
 
 const InputWrap = styled.form`
  width: 100%;
@@ -21,33 +22,39 @@ const MessageSendButton = styled.button`
  margin-left: 0.5rem;
 `
 
-export default function Input({ connected, user }) {
+export default function Input({ connected, user, setChat }) {
   const [message, setMessage] = useState('')
 
   function handleMessage(e) {
     setMessage(e.target.value)
   }
 
-  async function handleSendingMessage(e) {
+  function handleSendingMessage(e) {
     e.preventDefault()
 
     if (message.length !== 0) {
       const newChat = {
-        user,
-        message,
+        live_id: '1000109Y16751h1qk', // Room_id
+        msg: message,
+        name: user,
+        at: new Date().getTime(),
+        grade_id: '4',
+        grade_lvl: '33',
+        is_admin: false,
+        nlv: 0,
+        pfid: '1000591',
+        rel_color: '#FFFFFF',
+        signed: 1,
+        type: 0,
+        ugid: 11,
+        uglv: 55,
+        vip_fan: 0,
+        vip_fan_nameplate: { content: '粉絲團', color: 0 },
       }
 
-      // dispatch message to other users
-      const postResponse = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newChat),
-      })
-
-      // reset field if OK
-      if (postResponse.ok) setMessage('')
+      socketConnection.emit('msg', newChat)
+      setMessage('')
+      setChat((preMessage) => [...preMessage, newChat])
     }
   }
 

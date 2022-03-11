@@ -17,11 +17,12 @@ const user = `User_${String(new Date().getTime()).slice(-3)}`
 
 export default function ChatRoom() {
   const [connected, setConnected] = useState(false)
+  const [chat, setChat] = useState([])
 
   return (
     <ChatRoomWrap>
-      <Chat setConnected={setConnected} user={user} />
-      <Input connected={connected} user={user} />
+      <Chat setConnected={setConnected} user={user} chat={chat} setChat={setChat} />
+      <Input connected={connected} user={user} setChat={setChat} />
     </ChatRoomWrap>
   )
 }

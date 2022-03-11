@@ -22,7 +22,7 @@
     "remark-html": "^15.0.1",
     "rxjs": "^7.5.4",
     "socket.io": "^4.4.1",
-    "socket.io-client": "^4.4.1",
+    "socket.io-client": "2.2.0",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
