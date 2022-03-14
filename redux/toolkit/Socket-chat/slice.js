@@ -11,7 +11,6 @@ export const socketChatSlice = createSlice({
   reducers: {
     appendChatMessage: (state, action) => {
       state.data = [...state.data, action.payload]
-      console.log(state.data)
     },
     sendChatMessage: () => {},
   },
