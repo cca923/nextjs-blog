@@ -12,7 +12,7 @@ export const socketChatSlice = createSlice({
     appendChatMessage: (state, action) => {
       state.data = [...state.data, action.payload]
     },
-    sendChatMessage: () => {},
+    sendChatMessage: (state, action) => {},
   },
 
 })
