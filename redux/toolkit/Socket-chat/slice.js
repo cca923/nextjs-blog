@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
@@ -8,11 +9,10 @@ export const socketChatSlice = createSlice({
   name: 'socket-chat',
   initialState,
   reducers: {
-    // eslint-disable-next-line no-return-assign
-    getAllChatMessage: (state, aciton) => state.data = aciton.payload,
-    sendChatMessage: (state, action) => {
+    appendChatMessage: (state, action) => {
       state.data = [...state.data, action.payload]
     },
+    sendChatMessage: (state, action) => {},
   },
 
 })
@@ -20,6 +20,7 @@ export const socketChatSlice = createSlice({
 export const {
   getAllChatMessage,
   sendChatMessage,
+  appendChatMessage,
 } = socketChatSlice.actions
 
 export default socketChatSlice.reducer

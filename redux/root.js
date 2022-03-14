@@ -8,7 +8,12 @@ import moviesSlice from './toolkit/Movies/slice' // reduxjs/toolkit
 import { fetchPassengersEpic } from './toolkit/Passengers/epic'
 import passengersSlice from './toolkit/Passengers/slice'
 
-export const rootEpic = combineEpics(fetchMovieEpic, fetchPassengersEpic)
+import { socketChatEpic } from './toolkit/Socket-chat/epic'
+import socketChatSlice from './toolkit/Socket-chat/slice'
+
+import userInfoSlice from './toolkit/User/slice'
+
+export const rootEpic = combineEpics(fetchMovieEpic, fetchPassengersEpic, socketChatEpic)
 
 // ----- No reduxjs/toolkit ----- //
 // export const rootReducer = combineReducers({
@@ -19,4 +24,6 @@ export const rootEpic = combineEpics(fetchMovieEpic, fetchPassengersEpic)
 export const rootReducer = combineReducers({
   movies: moviesSlice,
   passengers: passengersSlice,
+  socketChat: socketChatSlice,
+  userInfo: userInfoSlice,
 })
