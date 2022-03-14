@@ -12,6 +12,7 @@ export const socketChatSlice = createSlice({
     appendChatMessage: (state, action) => {
       state.data = [...state.data, action.payload]
     },
+    // eslint-disable-next-line no-unused-vars
     sendChatMessage: (state, action) => {},
   },
 
