@@ -9,13 +9,11 @@ export const socketChatSlice = createSlice({
   name: 'socket-chat',
   initialState,
   reducers: {
-    getAllChatMessage: (state, action) => {
-      state.data = [...state.data, action.payload]
-    },
-    sendChatMessage: () => {},
     appendChatMessage: (state, action) => {
       state.data = [...state.data, action.payload]
+      console.log(state.data)
     },
+    sendChatMessage: () => {},
   },
 
 })

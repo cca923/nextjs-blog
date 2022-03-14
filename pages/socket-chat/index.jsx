@@ -1,5 +1,5 @@
 import Layout from '../../components/Layout'
-import ChatRoom from '../../components/Socket-chat'
+import ChatRoom from '../../container/Socket-chat'
 
 export default function SocketChatPage() {
   return (

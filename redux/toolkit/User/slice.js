@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  live_id: '1000109Y16751h1qk', // Room live_id
+  live_id: '1000109Y08857tzW3', // Room live_id
   name: '',
   grade_id: '4',
   grade_lvl: '33',

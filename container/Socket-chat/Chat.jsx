@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import io from 'socket.io-client'
-import { getAllChatMessage } from '../../redux/toolkit/Socket-chat/slice'
+import { appendChatMessage } from '../../redux/toolkit/Socket-chat/slice'
 import { useDispatch, useSelector } from 'react-redux'
 import { socketChatSelector } from '../../redux/toolkit/Socket-chat/selector'
 import { getUserInfo } from '../../redux/toolkit/User/slice'
@@ -62,10 +62,10 @@ export default function Chat({ setConnected }) {
     // referral: "",
     // token: "",
 
-    const userToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsaXZlX2lkIjoiMTAwMDEwOVkxNjc1MWgxcWsiLCJwZmlkIjoiMTAwMDU5MSIsIm5hbWUiOiJKYWNrMTExIiwiYWNjZXNzX3Rva2VuIjoiYmQ4OGQ3MWU0YWVmMmRiOTM3MzllNTFhMjU5MjNiODkiLCJsdiI6MSwiZnJvbSI6MSwiZnJvbV9zZXEiOjEsImNsaWVudF90eXBlIjoiTEFOR19XRUIifQ.vhW77Om6NbbWMZn_XBXG6CrC8UwJpXV43_SHUvmkhKk'
+    const userToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsaXZlX2lkIjoiMTAwMDEwOVkwODg1N3R6VzMiLCJwZmlkIjoiMTAwMDU5MSIsIm5hbWUiOiJKYWNrMTExIiwiYWNjZXNzX3Rva2VuIjoiYmQ4OGQ3MWU0YWVmMmRiOTM3MzllNTFhMjU5MjNiODkiLCJsdiI6MSwiZnJvbSI6MSwiZnJvbV9zZXEiOjEsImNsaWVudF90eXBlIjoiTEFOR19XRUIifQ.YZ30QacVE0qcbsImtOosnANFGQ1n4tGHTx6JI6zfiX4'
 
     const authData = {
-      live_id: '1000109Y16751h1qk', // Room live_id
+      live_id: '1000109Y08857tzW3', // Room live_id
       access_token: userToken,
       anchor_pfid: 1000513,
       client_type: 'LANG_WEB',
@@ -96,7 +96,7 @@ export default function Chat({ setConnected }) {
 
   useEffect(() => {
     socketConnection.on('msg', (message) => {
-      dispatch(getAllChatMessage(message))
+      dispatch(appendChatMessage(message))
     })
   }, [])
 
